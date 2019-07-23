@@ -1,10 +1,15 @@
 export default {
-  // 格式化下拉框选择数据 value:当前选中的数据；remoteData:查询获取的总体数据；previewData:上一条数据
-  formatSelect: function (value, remoteData, previewData) {
+  /* 格式化下拉框选择数据
+  ** value:当前选中的数据
+  ** remoteData:查询获取的总体数据
+  ** previewData:上一条数据
+  ** key：下拉框的选项的值
+  */
+  formatSelect: function (value, remoteData, previewData, key) {
     let totalData = ['全部']
     let result = []
     remoteData.forEach(item => {
-      totalData.push(item.id)
+      totalData.push(item[key])
     })
 
     // 判断当前选中的数据的长度
