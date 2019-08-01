@@ -1,9 +1,10 @@
+// 版本号：1.0.1
 export default {
   /* 格式化下拉框选择数据
   ** value:当前选中的数据
   ** remoteData:查询获取的总体数据
   ** previewData:上一条数据
-  ** key：下拉框的选项的值
+  ** key：el-option中 value 获取的属性名
   */
   formatSelect: function (value, remoteData, previewData, key) {
     let totalData = ['全部']
@@ -60,5 +61,30 @@ export default {
     }
 
     return result
+  },
+
+  /* 格式化日期
+  ** date：日期 -- Tue Aug 06 2019 00:00:00 GMT+0800 (中国标准时间)
+  ** fmt：返回的日期格式
+  */
+  formatDate: function (date, fmt) {
+    var o = {
+      'M+': date.getMonth() + 1, // 月份
+      'd+': date.getDate(), // 日
+      'H+': date.getHours(), // 小时
+      'm+': date.getMinutes(), // 分
+      's+': date.getSeconds(), // 秒
+      'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+      'S': date.getMilliseconds() // 毫秒
+    }
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+    }
+    for (var k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+      }
+    }
+    return fmt
   }
 }
