@@ -405,14 +405,17 @@ var PinYin = {
 
 var typeName = '' // 判断是获取全拼还是首字母 1：拼音全拼；2：拼音首字母；
 
-// 汉字转拼音
-function ConvertPinyin(l1, type) {
+/* 汉字转拼音
+** hanzi：待转换的汉字
+** type：判断是全拼还是首字母（1：拼音全拼；2：拼音首字母；）String
+*/
+function ConvertPinyin(hanzi, type) {
   typeName = type
-  var l2 = l1.length
+  var l2 = hanzi.length
   var I1 = ""
   var reg = new RegExp('[a-zA-Z0-9\- ]')
   for (var i = 0; i < l2; i++) {
-    var val = l1.substr(i, 1)
+    var val = hanzi.substr(i, 1)
     // 在对象中搜索
     var name = arraySearch(val, PinYin)
     if (reg.test(val)) {
@@ -430,9 +433,9 @@ function ConvertPinyin(l1, type) {
 }
 
 // 在对象中搜索
-function arraySearch(l1, l2) {
+function arraySearch(hanzi, l2) {
   for (var name in PinYin) {
-    if (PinYin[name].indexOf(l1) !== -1) {
+    if (PinYin[name].indexOf(hanzi) !== -1) {
       return ucfirst(name) // 首字母大写
       break
     }
@@ -441,14 +444,14 @@ function arraySearch(l1, l2) {
 }
 
 // 首字母大写或者获取拼音首字母
-function ucfirst(l1) {
-  if (l1.length > 0) {
+function ucfirst(hanzi) {
+  if (hanzi.length > 0) {
     if (typeName === '1') { // 全拼
-      var first = l1.substr(0, 1).toUpperCase()
-      var spare = l1.substr(1, l1.length)
+      var first = hanzi.substr(0, 1).toUpperCase()
+      var spare = hanzi.substr(1, hanzi.length)
       return first + spare
     } else if (typeName === '2') { // 拼音首字母
-      var first = l1.substr(0, 1)
+      var first = hanzi.substr(0, 1)
       return first
     }
   }
